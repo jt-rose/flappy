@@ -8,6 +8,10 @@ enum GameMode {
     End,
 }
 
+const SCREEN_WIDTH: i32 = 80;
+const SCREEN_HEIGHT: i32 = 50;
+const FRAME_DURATION: f32 = 75.0;
+
 fn main() -> BError {
 
     let context = BTermBuilder::simple80x50()
@@ -18,13 +22,17 @@ fn main() -> BError {
 }
 
 struct State {
-    mode: GameMode
+    mode: GameMode,
+    player: Player,
+    frame_time: f32,
 }
 
 impl State {
     fn new() -> Self {
         State {
-            mode: GameMode::Menu
+            mode: GameMode::Menu,
+            player: Player::new(5, 25),
+            frame_time: 0.0,
         }
     }
 
@@ -36,6 +44,8 @@ impl State {
     fn restart(&mut self) {
         // TODO: fill in later
         self.mode = GameMode::Playing;
+        self.frame_time = 0.0;
+        self.player = Player::new(5, 25);
     }
 
     fn main_menu(&mut self, ctx: &mut BTerm) {
