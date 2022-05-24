@@ -37,7 +37,6 @@ impl State {
     }
 
     fn play(&mut self, ctx: &mut BTerm) {
-        // TODO: fill in later
         ctx.cls_bg(NAVY);
         self.frame_time += ctx.frame_time_ms;
         if self.frame_time > FRAME_DURATION {
@@ -57,7 +56,6 @@ impl State {
     }
 
     fn restart(&mut self) {
-        // TODO: fill in later
         self.mode = GameMode::Playing;
         self.frame_time = 0.0;
         self.player = Player::new(5, 25);
@@ -120,6 +118,7 @@ impl Player {
     }
 
     fn render(&mut self, ctx: &mut BTerm) {
+
         ctx.set(
             0,
             self.y,
@@ -160,4 +159,33 @@ impl Obstacle {
             size: i32::max(2, 20 - score)
         }
     }
+
+    fn render(&mut self, ctx: &mut BTerm, player_x: i32) {
+        let screen_x = self.x - player.x;
+        let half_size = self.size / 2;
+
+        // draw the top portion of an obstacle
+        for y in 0..self.gap_y - half_size {
+            ctx.set(
+                screen_x,
+                y,
+                RED,
+                BLACK,
+                to_cp437('|')
+            );
+        }
+
+        // draw the bottom portion of an obstacle
+        for y in self.gap_y + half_size..SCREEN_HEIGHT {
+            ctx.set(
+                screen_x,
+                y,
+                RED,
+                BLACK,
+                to_cp437('|')
+            );
+        }
+    }
+
+
 }
