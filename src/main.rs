@@ -114,4 +114,8 @@ impl Player {
             self.y = 0;
         }
     }
+
+    fn flap(&mut self) {
+        self.velocity = -2.0;
+    }
 }
